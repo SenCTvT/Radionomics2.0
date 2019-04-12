@@ -1,0 +1,19 @@
+{
+    "remotePath": "/Radionomics",
+    "host": "52.172.5.20",
+    "username": "ritwik",
+    "password": "Password12345",
+    "port": 21,
+    "secure": false,
+    "protocol": "ftp",
+    "uploadOnSave": false,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": null,
+    "passphrase": null,
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.DS_Store"
+    ]
+}

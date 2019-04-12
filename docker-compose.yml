@@ -1,0 +1,13 @@
+radionomics:
+  image: radionomics/radionomics:0.0.1
+  command: python -u runserver.py
+  ports:
+    - "5600:5600"
+  links:
+    - db
+  environment: 
+    - HOST=http://localhost:5600
+db:
+  image: mongo
+  ports:
+    - "27017:27017"

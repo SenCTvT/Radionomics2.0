@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Upload Files</h1>
+    <form id="form" method="POST" enctype="multipart/form-data" action="http://52.172.5.20/api/patient-cases/upload">
+        <input type="file" name="files[]" multiple="">
+        <br/>
+        Case Name: <input type="text" name="case_name" /><br />
+        <input type="submit" value="upload">
+        <br/>
+        <input type="text" name="key" value="58ce7f82fc9ca70611edfd6f" >
+    </form>
+    <div id="result">
+
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.0.js"
+      integrity="sha256-wPFJNIFlVY49B+CuAIrDr932XSb6Jk3J1M22M3E2ylQ="
+      crossorigin="anonymous"></script>
+    <script>
+    $(document).ready(function(){
+        $("#form").submit(function(event){
+            event.preventDefault();
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: 'http://52.172.5.20/api/patient-cases/upload',
+                type: 'POST',
+                xhr: function() {
+                    var myXhr = $.ajaxSettings.xhr();
+                    return myXhr;
+                },
+                success: function (data) {
+                    $("#result").html(JSON.stringify(data));
+                },
+                data: formData,
+                cache: false,
+                timeout: 3600000,
+                contentType: false,
+                processData: false
+            });
+            return false;
+        });
+    });
+    </script>
+</body>
+</html>

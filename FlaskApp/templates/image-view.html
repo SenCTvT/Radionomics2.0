@@ -1,0 +1,572 @@
+﻿{% extends "layout1.html" %}
+{% macro show_case_series(img_path, link, content) %}
+<div class="col s12">
+    <div class="card">
+        <div class="card-image">
+            <img src="{{ img_path }}" />
+        </div>
+        <div class="card-content">
+            <p>
+                <a href="{{ link }}">
+                    {% if content != '' %}
+                        {% set content = 'View' %}
+                    {% endif %}
+                    {{ content }}
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+{% block title %}Image View{% endblock %}
+{% block head %}
+{{ super() }}
+<link href="{{ url_for('static', filename='css/imageviewer.css') }}" rel="stylesheet" />
+<style>
+    main, footer {
+        margin-left: 200px;
+    }
+
+    @media only screen and (max-width : 992px) {
+        header, main, footer {
+            margin-left: 0;
+        }
+    }
+</style>
+{% endblock %}
+{% block body %}
+<header>
+    {% block navbar %}
+    {{ super() }}
+    {% endblock %}
+    {% block sidenav %}
+    {{ super() }}
+    {% endblock %}
+    <!--Series navigation panel-->
+    <div id="slide-out" class="side-nav fixed"
+         style="background-color: lightyellow;
+                width:200px;
+                overflow:scroll;
+                float: left;">
+        <div class="row z-depth-3" style="background-color: white; visibility: visible" id="debclose_container">
+            <div class="col s12">
+                <div id="debclose" style="cursor: pointer;">x</div>
+            </div>
+        </div>
+        <div class="row">
+            {% set url = request.path.split('/') %}
+            {% for images in result.series %}
+                {% set img_url = request.url_root ~ 'api/patient-cases/' ~ url[2] ~ '/images/' ~ url[4] ~ '/' ~ loop.index0 %}
+                {% set link = request.url_root ~ 'patient-cases/' ~ url[2] ~ '/images/' ~ url[4] ~ '/' ~ loop.index0 %}
+                {% set series_url = loop.index0 ~ '/' %}
+                {{ show_case_series(img_url, link, result.series.series_description) }}
+            {% endfor %}
+        </div>
+    </div>
+</header>
+    {% block main %}
+<main style="overflow: scroll;float: left; flex: 1;">
+    <div class="row">
+        <div class="col l8" id="panel1" style="text-align:center">
+            <div class="cf" style="width:initial; margin-top: 10px;">
+                {% set url = request.path.split('/') %}
+                {% set img_url = request.url_root ~ 'api/patient-cases/' ~ url[2] ~ '/images/' ~ result.index_1 ~ '/' ~ result.index_2 %}
+                <img src="{{ img_url }}" data-high-res-src="{{ img_url }}" alt="" class="pannable-image canvas" id="mri_image" style="height:300px; width:300px;">
+            </div>
+            <br />
+            <div class="container">
+                <form action="#">
+                    <!--<p class="range-field">
+                        Change Image: <br />
+                        <input type="range" id="test5" min="0" max="100" />
+                    </p>-->
+                </form>
+            </div>
+            <div class="container">
+                {% set img_url_ri = request.url_root ~ 'api/patient-cases/' ~ url[2] ~ '/ri-map/' ~ result.index_1 ~ '/' ~ result.index_2 %}
+                <a class="waves-effect waves-light btn" id="ri-map-convert-btn" data-ri-url="{{ img_url_ri }}">View RI map</a>
+                <a class="waves-effect waves-light btn" id="analysis-btn" data-target="modal1">Analyse</a>
+            </div>
+        </div>
+        <div class="col l4">
+            <h4>Spectroscopy</h4>
+            <div id="container">
+                <img src="{{ url_for('static', filename='images/assets/black.jpg') }}" style="height: 300px; width: 300px;"/>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Analysis</h4>
+            <p>
+                <div class="row">
+                    <div class="col s12 l3 m4">
+                        <div class="cfc" style="width:initial; margin-top: 10px;">
+                            {% set img_url_analysis = request.url_root ~ 'api/patient-cases/' ~ url[2] ~ '/images/' ~ result.index_1 ~ '/' ~ result.index_2 ~ '/analysis' %}
+                            <img src="#" class="materialboxed" id="analysis-img" data-analysis-url={{ img_url_analysis }} />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l12">
+                        <ul class="collapsible" data-collapsible="accordion" id="analysis-res">
+
+                        </ul>
+                    </div>
+                </div>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
+        </div>
+    </div>
+</main>
+    {% endblock %}
+    {% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/imageviewer.js') }}"></script>
+<script src="{{ url_for('static', filename='js/highcharts.js') }}"></script>
+<script>
+    function chore() {
+        // Returns width of browser viewport
+        var w = $(window).width();
+        var h = $(window).height();
+        var h_nav = $("nav").height();
+
+        if (w >= 992) {
+            $('#debclose_container').css('visibility', 'hidden');
+
+            var w1 = $(window).width() - $("#slide-out").width();
+            console.log("w1" + w1);
+            $("main").css("width", w1 + "px");
+
+            $("#slide-out").css("z-index", "-5");
+        }
+        else {
+            $("main").css("width", w + "px");
+            $('#debclose_container').css('visibility', 'visible');
+            $("#slide-out").css("z-index", "999");
+        }
+        var w_main = $("main").width();
+        $("#slide-out").css("margin-top", h_nav);
+    }
+
+    $(document).ready(function () {
+        chore();
+
+        $(".button-collapse").sideNav({
+            edge: 'left', // Choose the horizontal origin
+            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+            draggable: true // Choose whether you can drag to open on touch screens
+        });
+
+        $('.collapsible').collapsible();
+
+        $('.modal').modal();
+
+
+        $('#debclose').click(function () {
+            $('.series-list').sideNav('hide');
+        });
+
+        $(window).resize(function () {
+            chore();
+        });
+
+        $('.pannable-image').ImageViewer();
+        var flag = false;
+        $('.cf').mouseover(function () {
+            flag = true;
+        });
+        $('.cf').mouseleave(function () {
+            flag = false;
+        });
+        $(document).on('mousedown', 'img', function (event) {
+            if (flag) {
+                if (!this.canvas) {
+                    this.canvas = $('<canvas />')[0];
+                    this.canvas.width = this.width;
+                    this.canvas.height = this.height;
+                    this.canvas.getContext('2d').drawImage(this, 0, 0, this.width, this.height);
+                }
+                var pixelData = this.canvas.getContext('2d').getImageData(event.offsetX, event.offsetY, 1, 1).data;
+                console.log('R: ' + pixelData[0] + '<br>G: ' + pixelData[1] + '<br>B: ' + pixelData[2] + '<br>A: ' + pixelData[3]);
+                var pixel = Math.round((pixelData[0] + pixelData[1] + pixelData[2]) / 3);
+                loadPixel(pixel);
+                console.log("Pixel: " + pixel);
+            }
+        });
+        $('#ri-map-convert-btn').on('click', function (e) {
+            e.preventDefault();
+            var link = $(this).data('ri-url');
+            $.get(link, function (data) {
+                $('.iv-snap-image, .iv-large-image').attr('src', link);
+            });
+            console.log(link);
+        });
+        $("#analysis-btn").on('click', function (e) {
+            e.preventDefault();
+            var protocol = window.location.protocol;
+            var host = window.location.host;
+            var path = window.location.pathname;
+            var url = protocol + '//' + host + '/api' + path + '/analysis';
+            console.log(url);
+            $.get(url, function (data) {
+                console.log(data);
+
+                $.each(data.infected_areas, function (key, val) {
+                    var html = '\
+                    <li>\
+                        <div class="collapsible-header"><i class="material-icons">whatshot</i>Detected result: ' + val.detected_result + '</div>\
+                        <div class="collapsible-body"><span>';
+
+                    html += "Area: " + val.area + "<br>";
+                    html += "Tumor width: " + val.tumor_width + "<br>";
+                    $.each(val.coordinate, function (k2, v2) {
+                        html += "Spectroscopy " + k2 + ": " + v2 + "<br>";
+                    });
+                    if (val.actual_result != undefined) {
+                        html += "Actual result: " + val.actual_result;
+                    }
+                    $('#analysis-res').append(html);
+                });
+            }, 'json');
+
+        });
+
+
+        var protocol = window.location.protocol;
+        var host = window.location.host;
+        //get all disease name
+        url = protocol + '//' + host + '/api/utility/get-disease-names';
+        console.log(url);
+        //got all disease name
+
+        $.get(url, function (result) {
+            console.log(result);
+            var html = '<option value="" disabled selected>Choose your option</option>';
+            for (var i = 0; i < result.length; i++) {
+                html += '<option value="' + result[i] + '">' + result[i] + '</option>'; console.log(result[i]);
+            }
+        });
+
+        var url = $("#analysis-img").data('analysis-url');
+        $.get(url, function (result) {
+            console.log(result);
+            if (result.error.error) {
+                console.log('Error');
+            }
+            var analysis_image = result.analysis_image;
+            $.get(analysis_image, function (res) {
+                $("#analysis-img").attr('src', analysis_image);
+            });
+        });
+
+        $('select').material_select();
+    });
+    //end document.ready
+
+
+    function loadPixel(pixelvalue) {
+        var protocol = window.location.protocol;
+        var host = window.location.host;
+        var url = protocol + '//' + host + '/api/utility/get-spectroscopy';
+        console.log(url);
+        var dataset = [];
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                pixel: pixelvalue
+            },
+            success: function (data) {
+                if (data.error.error)
+                    console.log('Error');
+                else {
+                    $.each(data.x, function (key, val) {
+                        dataset.push({ x: val, y: data.y[key], labels: data.labels[key] });
+                    });
+                    console.log(dataset);
+                    showchart(dataset);
+
+                }
+            }
+        });
+    }
+
+    Highcharts.theme = {
+        colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
+           '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+        chart: {
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                stops: [
+                   [0, '#2a2a2b'],
+                   [1, '#3e3e40']
+                ]
+            },
+            style: {
+                fontFamily: '\'Unica One\', sans-serif'
+            },
+            plotBorderColor: '#606063'
+        },
+        title: {
+            style: {
+                color: '#E0E0E3',
+                textTransform: 'uppercase',
+                fontSize: '20px'
+            }
+        },
+        subtitle: {
+            style: {
+                color: '#E0E0E3',
+                textTransform: 'uppercase'
+            }
+        },
+        xAxis: {
+            gridLineColor: '#707073',
+            labels: {
+                style: {
+                    color: '#E0E0E3'
+                }
+            },
+            lineColor: '#707073',
+            minorGridLineColor: '#505053',
+            tickColor: '#707073',
+            title: {
+                style: {
+                    color: '#A0A0A3'
+
+                }
+            }
+        },
+        yAxis: {
+            gridLineColor: '#707073',
+            labels: {
+                style: {
+                    color: '#E0E0E3'
+                }
+            },
+            lineColor: '#707073',
+            minorGridLineColor: '#505053',
+            tickColor: '#707073',
+            tickWidth: 1,
+            title: {
+                style: {
+                    color: '#A0A0A3'
+                }
+            }
+        },
+        tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            style: {
+                color: '#F0F0F0'
+            }
+        },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    color: '#B0B0B3'
+                },
+                marker: {
+                    lineColor: '#333'
+                }
+            },
+            boxplot: {
+                fillColor: '#505053'
+            },
+            candlestick: {
+                lineColor: 'white'
+            },
+            errorbar: {
+                color: 'white'
+            }
+        },
+        legend: {
+            itemStyle: {
+                color: '#E0E0E3'
+            },
+            itemHoverStyle: {
+                color: '#FFF'
+            },
+            itemHiddenStyle: {
+                color: '#606063'
+            }
+        },
+        credits: {
+            style: {
+                color: '#666'
+            }
+        },
+        labels: {
+            style: {
+                color: '#707073'
+            }
+        },
+
+        drilldown: {
+            activeAxisLabelStyle: {
+                color: '#F0F0F3'
+            },
+            activeDataLabelStyle: {
+                color: '#F0F0F3'
+            }
+        },
+
+        navigation: {
+            buttonOptions: {
+                symbolStroke: '#DDDDDD',
+                theme: {
+                    fill: '#505053'
+                }
+            }
+        },
+
+        // scroll charts
+        rangeSelector: {
+            buttonTheme: {
+                fill: '#505053',
+                stroke: '#000000',
+                style: {
+                    color: '#CCC'
+                },
+                states: {
+                    hover: {
+                        fill: '#707073',
+                        stroke: '#000000',
+                        style: {
+                            color: 'white'
+                        }
+                    },
+                    select: {
+                        fill: '#000003',
+                        stroke: '#000000',
+                        style: {
+                            color: 'white'
+                        }
+                    }
+                }
+            },
+            inputBoxBorderColor: '#505053',
+            inputStyle: {
+                backgroundColor: '#333',
+                color: 'silver'
+            },
+            labelStyle: {
+                color: 'silver'
+            }
+        },
+
+        navigator: {
+            handles: {
+                backgroundColor: '#666',
+                borderColor: '#AAA'
+            },
+            outlineColor: '#CCC',
+            maskFill: 'rgba(255,255,255,0.1)',
+            series: {
+                color: '#7798BF',
+                lineColor: '#A6C7ED'
+            },
+            xAxis: {
+                gridLineColor: '#505053'
+            }
+        },
+
+        scrollbar: {
+            barBackgroundColor: '#808083',
+            barBorderColor: '#808083',
+            buttonArrowColor: '#CCC',
+            buttonBackgroundColor: '#606063',
+            buttonBorderColor: '#606063',
+            rifleColor: '#FFF',
+            trackBackgroundColor: '#404043',
+            trackBorderColor: '#404043'
+        },
+
+        // special colors for some of the
+        legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
+        background2: '#505053',
+        dataLabelsColor: '#B0B0B3',
+        textColor: '#C0C0C0',
+        contrastTextColor: '#F0F0F3',
+        maskColor: 'rgba(255,255,255,0.3)'
+    };
+
+
+
+    // Apply the theme
+    Highcharts.setOptions(Highcharts.theme);
+
+
+    //data.push(["time", "value1", "value2"]);
+
+    function showchart(dataset) {
+        Highcharts.chart('container', {
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: 'SPECTROSCOPE'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            },
+            xAxis: {
+                title: {
+                    text: 'ppm'
+                }
+                // type: 'datetime'
+            },
+            /*  yAxis: {
+                  title: {
+                      text: 'Exchange rate'
+                  }
+              }, */
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+
+            tooltip: {
+                formatter: function () {
+                    return this.point.labels == "" ? false : "X:" + this.point.x + " ,Y:" + this.point.y + '<br/>' + this.point.labels;
+                }
+            },
+
+            series: [{
+                type: 'area',
+                data: dataset
+            }]
+        });
+    };
+</script>
+    {% endblock %}
+{% endblock %}

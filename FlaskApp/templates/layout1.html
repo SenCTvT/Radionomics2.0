@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {% block head %}
+        <title>{% block title %}Welcome{% endblock %} | Mastisk Nidaan </title>
+        <meta charset="utf-8" />
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        {% block navbar %}
+            <!--Navbar Codes-->
+            <div class="navbar-fixed" style="z-index:998">
+                <nav>
+                    <div class="nav-wrapper">
+                        <a href="#!" class="brand-logo" style="padding-left: 10px;">Mastishk Nidaan</a>
+                        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="/dashboard">Dashboard</a></li>
+                            {% if 'username' in session %}
+                                <li><a href="/logout">Logout</a></li>
+                            {% else %}
+                                <li><a href="/auth">Login</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        {% endblock %}
+        {% block sidenav %}
+            <ul class="side-nav" id="mobile-demo">
+                <li>
+                    <div class="userView">
+                        <div class="background">
+                            <img src="{{ url_for('static', filename='images/assets/background.jpg') }}" />
+                        </div>
+                        <a href="#!user"><img class="circle" src="{{ url_for('static', filename='images/assets/person.jpg') }}" /></a>
+                        <a href="#!name"><span class="white-text name">John Doe</span></a>
+                        <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                    </div>
+                </li>
+                <li><a href="/dashboard">Upload New Case</a></li>
+                <li><div class="divider"></div></li>
+                <li><a class="subheader">Previous Cases</a></li>
+                <li><a class="waves-effect" href="/patient-cases">View Cases</a></li>
+                <li><div class="divider"></div></li>
+                <li><a class="waves-effect blue-text text-darken-2" href="/logout">Sign Out<i class="material-icons">power_settings_new</i></a></li>
+            </ul>
+        {% endblock %}
+        {% block main %}
+            <main></main>
+        {% endblock %}
+        {% block footer %}
+        {% endblock %}
+        {% block scripts %}
+            <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $(".button-collapse").sideNav();
+                });
+            </script>
+        {% endblock %}
+    {% endblock %}
+</body>
+</html>

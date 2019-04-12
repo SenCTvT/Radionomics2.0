@@ -1,0 +1,43 @@
+﻿{% extends "layout1.html" %}
+{% macro show_case_series(img_path, series_url, title="N/A", content="N/A") %}
+    <div class="col s12 m3 l2">
+        <div class="card small hoverable">
+            <div class="card-image">
+                <img src="{{ img_path }}" />
+                <span class="card-title">{{ title }}</span>
+            </div>
+            <div class="card-content">
+                <p>
+                    {{ content }}
+                </p>
+            </div>
+            <div class="card-action">
+                <a href="{{ series_url }}">View</a>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+{% block title %}Series View{% endblock %}
+{% block main %}
+    <main>
+        <div class="row">
+            {% if result.status == 'success' %}
+                {% for series in result.case.files %}
+                    {% set img_url = url_for('static', filename='images/assets/brain.png') %}
+                    {% set series_url = 'images/' ~ loop.index0 ~ '/0' %}
+                    {{ show_case_series(img_url, series_url, series['series_time'], series['series_description']) }}
+                {% endfor %}
+            {% else %}
+                {{ result.msg }}
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+            $(document).ready(function () {
+                $(".button-collapse").sideNav();
+            });
+    </script>
+{% endblock %}

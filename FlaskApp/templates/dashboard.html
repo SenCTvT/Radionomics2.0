@@ -1,0 +1,94 @@
+﻿{% extends "layout.html" %}
+{% block main %}
+    <main style="padding-top: 86px">
+    <div class="container" style="max-width: 80% !important; background-color: #f8f9fa">
+    	<div class="row">
+    		<div class="col-md-6" style="text-align: center; padding: 30px; margin: 20px auto 20px auto; border: 4px outset grey; box-shadow: 8px 8px 5px grey">
+    			 <h4 style="font-size: 30px;color: #E80000"><i class="fas fa-notes-medical" style="color: #E80000"></i>  <strong>New Patient</strong>  <i class="fas fa-notes-medical"></i> </h4>
+    			 <hr class="my-4">
+                    <div style="width: 100%; padding: 10px 30px 30px 30px">
+                        <img src="static/images/assets/brain_icon.jpeg" height="100" width="100"  style="display:block;margin: auto;" id="uploadicon"/>
+                    </div>
+
+                    <span style="font-size: 18px;"><strong>Upload Dicom Images</strong></span>
+                    <form  method="POST" id="form" enctype="multipart/form-data">
+
+                        <div class="file-field input-field">
+                            <div style="display: block;margin: auto; border: 1px solid grey; padding: 5px; margin: 10px">
+                                <input class="form-control" type="file" multiple required name="files[]" style="border: none;">
+                            </div>
+                            <!-- div class="file-path-wrapper">
+                                <input class="file-path validate" name="file-path" type="text" placeholder="Upload one or more files"><br/>
+                            </div> -->
+                        </div>
+
+                        <div class="form-control" style="max-width: 30%; margin: auto;">
+                            <input id="case_name" type="text" placeholder="case_id" class="validate" style="border: none; width: 100%">
+                        </div>
+
+                        <div class="progress" style="visibility: hidden;">
+                            <div class="determinate upload-bar"></div>
+                        </div>
+
+                        <label class="upload-prct"></label>
+
+                        <br/>
+
+                        <button class="btn btn-dark" ><i class="fas fa-upload"></i>  Upload</button>
+                    </form>
+                </div>
+            </div>
+    	
+    	
+
+        <div class="row" style="">
+            <div class="col-md-10" style="text-align: center; padding: 30px; margin: 20px auto 20px auto; border: 4px outset grey; box-shadow: 8px 8px 5px grey">
+                 <h4 style="font-size: 30px;color: #E80000"><i class="fas fa-file-medical-alt"></i>  <strong>Past Activities</strong> </h4>
+                <hr class="my-4">
+                <ul class="collection with-header z-depth-4" style="margin-top:10px;" id="patientHistoryPanel">
+                    <li class="card" style="text-align:center" id="patientHistoryPanelMore">
+                        <a class="btn btn-dark" href="patient-cases">More</a>
+                    </li>
+                </ul>
+
+            </div>
+            
+        </div>
+    </div>
+    </main>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/fileUpload.js') }}"></script>
+    <script>
+        $(function () {
+            
+            var jqxhr = $.getJSON("api/patient-cases/", function (result) {
+                if (result['error']['error'] == true) {
+                    console.log(result['error']['error_msgessage']);
+                }
+                console.log(result);
+                console.log("success");
+            })
+              .done(function (result) {
+                  var html = '\
+                      <li class="card">\
+                        <i class="material-icons circle red">folder</i>\
+                        <span class="card-title">'+ result.cases[0].case_id +'</span>\
+                        <p>\
+                            DateTime : '+ result.cases[0].datetime +'\
+                        </p>\
+                        <a href="patient-cases/' + result.cases[0].case_id + '" class="secondary-content"><i class="material-icons">send</i></a>\
+                      </li>';
+                  $('#patientHistoryPanelMore').before(html);
+                  console.log("done uploading");
+              })
+              .fail(function () {
+                  console.log("error in uploading");
+              })
+              .always(function () {
+                  console.log("complete uploading process");
+              });
+        });
+    </script>
+{% endblock %}

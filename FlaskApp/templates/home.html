@@ -1,0 +1,151 @@
+﻿{% extends "layout.html" %}
+{% block main %}
+    <main style="padding-top: 86px;">
+    <div class="container" style="max-width: 80% !important; background-color: #f8f9fa">
+       <div class="row">
+            <div class="col-sm-6" style="height: 400px; padding: 100px 20px 20px 50px">
+                <h1 style="font-size: 4em"><strong>Welcome</strong></h1>
+                <p style="font-size: 1.5em">Brain Tumor Recognition using Machine Learning</p>
+            </div>
+            <div class="col-sm-6" style="height: 30%;background-color: inherit !important">
+                <img class="img-fluid" src="static/images/assets/brain-2.png" style="max-height: 350px; width: 100%; padding: 0 20% 0 20%">
+            </div>
+       </div>
+        <div class="row">
+             <div class="col-sm-6" style="height: 30%;background-color: inherit !important">
+                <img class="img-fluid" src="static/images/assets/brain1.png" style="max-height: 350px; width: 100%;">
+            </div>
+            <div class="col-sm-6" style="padding: 10px 50px 20px 20px">
+                    <h2>About</h2>
+                    <p style="font-size: 1.2em">
+                        The application accepts MRI images of the brain of a patient and shows a RI map of the brain. The RI map helps the doctors to identify the brain lesions where
+                        there is a chance of brain cancer. With the help of the RI values of brain tissues and fluids in theses regions the doctors can conclude whether the patient is a cancer suspect. It can also
+                        help to identify the cancer stage by providing the RI values in these regions and size of the mass.
+                    </p>
+                </div>
+            </div>
+        
+        <div class="container">
+            <div class="row" style="padding-top: 60px">
+                <div class="col-lg-12">
+                    <h2 style="text-align: center; font-size: 3.5em; color: #6c757d">Process</h2>
+                    <hr class="my-4">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4" style="text-align: center">
+                    <h1 style="font-size: 60px"><i class="fas fa-upload"></i></h1>
+                    <h5 style="font-size: 1.4em"><strong>Upload</strong></h5>
+                    <p style="font-size: 1.2em">
+                        Upload dicom images of the brain MRI of a patient.
+                    </p>
+                </div>
+               <div class="col-sm-4" style="text-align: center">
+                    <h1 style="font-size: 60px"><i class="fas fa-cogs"></i></h1>
+                    <h5 style="font-size: 1.4em"><strong>Analyse</strong></h5>
+                    <p style="font-size: 1.2em">
+                        Use the various visual and quantitative tools provided by the application to analyse the MRI image.
+                    </p>
+                </div>
+                 <div class="col-sm-4" style="text-align: center">
+                    <h1 style="font-size: 60px"><i class="fas fa-poll"></i></h1>
+                    <h5 style="font-size: 1.4em"><strong>Submit</strong></h5>
+                    <p style="font-size: 1.2em">
+                        Submit the diagnosis result to the website for future reference.
+                    </p>
+                </div>
+            </div>    
+            <div class="row" style="padding-top: 60px">
+                <div class="col-lg-12">
+                    <h2 style="text-align: center; font-size: 3.5em; color: #6c757d">Creators</h2>
+                    <hr class="my-4">
+                </div>
+            </div>
+
+            <!-- sandipan -->
+            <div class="row" style="padding: 10px 0 30px 0">
+                <div class="col-sm-6" style="height: 30%;background-color: inherit !important">
+                <img class="img-fluid" src="static/images/assets/sc.jpeg" style="max-height: 350px; width: auto; display: block; margin-left: auto; margin-right: auto; border: 2px solid grey;box-shadow: 10px 10px 5px grey">
+                </div>
+                <div class="col-sm-6" style="padding: 30px; margin: auto 0 auto 0">
+                    <h2 style="font-style: italic;">Sandipan Chakroborty</h2>
+                    <p style="font-size: 1.2em">
+                       Project Leader
+                    </p>
+                </div>
+            </div>
+            
+            <!-- shaurya -->
+            <div class="row" style="padding: 10px 0 30px 0">
+            <div class="col-sm-6" style="padding: 30px; margin: auto 0 auto 0;">
+                <div style="padding-left: 100px">
+                <h2 style="font-style: italic;">Shaurya Mukhopadhyay</h2>
+                <p style="font-size: 1.2em">
+                   Machine Learning coding
+                </p>
+                </div>
+            </div>
+             <div class="col-sm-6" style="height: 30%;background-color: inherit !important">
+                <img class="img-fluid" src="static/images/assets/sm.jpeg" style="max-height: 350px; width: auto; display: block; margin-left: auto; margin-right: auto; border: 2px solid grey;box-shadow: 10px 10px 5px grey">
+            </div>
+
+            <!-- soumyojit -->
+            </div>
+            <div class="row" style="padding: 10px 0 30px 0">
+             <div class="col-sm-6" style="height: 30%;background-color: inherit !important">
+                <img class="img-fluid" src="static/images/assets/passport.jpg" style="max-height: 350px; width: auto; display: block; margin-left: auto; margin-right: auto; border: 2px solid grey;box-shadow: 10px 10px 5px grey">
+            </div>
+            <div class="col-sm-6" style="padding: 30px; margin: auto 0 auto 0">
+                    <h2 style="font-style: italic;">Soumyojit Sadhukhan</h2>
+                    <p style="font-size: 1.2em">
+                       Front-end Design
+                    </p>
+                </div>
+            </div>
+
+            <!-- Ria -->
+            <div class="row" style="padding: 10px 0 30px 0">
+            <div class="col-sm-6" style="padding: 30px; margin: auto 0 auto 0;">
+                <div style="padding-left: 100px">
+                <h2 style="font-style: italic;">Ria Roy</h2>
+                <p style="font-size: 1.2em">
+                    Python Coding
+                </p>
+                </div>
+            </div>
+             <div class="col-sm-6" style="height: 30%;background-color: inherit !important">
+                <img class="img-fluid" src="static/images/assets/rr.jpeg" style="max-height: 350px; width: auto; display: block; margin-left: auto; margin-right: auto; border: 2px solid grey;box-shadow: 10px 10px 5px grey">
+            </div>
+            </div>
+            <!-- src & riwtik -->
+            <div class="row" style="padding: 10px 0 310px 0">
+             <div class="col-sm-6" style="height: 30%;background-color: inherit !important">
+                <img class="img-fluid" src="static/images/assets/src1.jpeg" style="max-height: 350px; width: auto; display: block; margin-left: auto; margin-right: auto; border: 2px solid grey;box-shadow: 10px 10px 5px grey">
+            </div>
+            <div class="col-sm-6" style="padding: 30px; margin: auto 0 auto 0">
+                    <h2 style="text-decoration: underline;">Special Thanks to</h2>
+                    <h2 style="font-style: italic;">Prof. Somenath Roychowdhury</h2>
+                    <p style="font-size: 1.2em">
+                       Mentor
+                    </p>
+                </div>
+            </div>
+           
+        </div>
+        
+
+        
+    </main>
+{% endblock %}
+{% block footer %}
+    <!--Footer code-->
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-right">
+          <a href="#">Back to top</a>
+        </p>
+        <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+        <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
+      </div>
+    </footer>
+{% endblock %}

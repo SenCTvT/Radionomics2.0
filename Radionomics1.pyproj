@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{e9532bc7-dd9d-46af-bddf-2e1bc813709d}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile />
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+    <InterpreterVersion />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="FlaskApp\models\__init__.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\abc.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\codecs.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\copy_reg.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\fnmatch.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\genericpath.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\linecache.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\locale.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\ntpath.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\os.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\posixpath.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\re.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\sre.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\sre_compile.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\sre_constants.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\sre_parse.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\stat.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\types.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\UserDict.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\warnings.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\_abcoll.py" />
+    <Compile Include="FlaskApp\venv\lib\python2.7\_weakrefset.py" />
+    <Compile Include="FlaskApp\views\auth.py" />
+    <Compile Include="FlaskApp\views\patientCases.py" />
+    <Compile Include="FlaskApp\views\test.py" />
+    <Compile Include="FlaskApp\views\__init__.py" />
+    <Compile Include="FlaskApp\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FlaskApp\static\test.html" />
+    <Content Include="FlaskApp\templates\test.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FlaskApp" />
+    <Folder Include="FlaskApp\models" />
+    <Folder Include="FlaskApp\static" />
+    <Folder Include="FlaskApp\templates" />
+    <Folder Include="FlaskApp\venv\lib\python2.7" />
+    <Folder Include="FlaskApp\views" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>

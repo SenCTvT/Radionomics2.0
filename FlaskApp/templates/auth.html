@@ -1,0 +1,74 @@
+﻿{% extends "layout.html" %}
+{% block main %}
+<main style="padding-top: 86px">
+    <div class="container" style="max-width: 80% !important; background-color: #f8f9fa">
+        <div class="row" style="padding-bottom: 200px">
+            <div class="col-md-6" style="padding: 30px 40px 30px 40px">
+                <h1 style="text-align: center;padding-bottom: 30px">Login</h1>
+                <form class="col s12" style="margin-top:10px;" method="post" action="/login">
+                          <div class="form-group">
+                              <label for="lusername">Username</label>
+                              <input id="lusername" type="text" class="validate form-control" name="username" placeholder="Enter username">
+                          </div>
+                          <div class="form-group">
+                              <label for="lpassword">Password</label>
+                              <input id="lpassword" type="password" class="validate form-control" name="password" placeholder="Enter password">
+                          </div>
+                         <button type="submit" class="btn btn-dark">Submit</button>
+                     
+                  </form>
+                <!-- <form method="post" action="/login" style="font-size: 20px">
+                  <div class="form-group">
+                    <label for="Username">Username</label>
+                    <input id="lusername" name="username" type="text" class="form-control" placeholder="Enter username">
+                    <small id="emailHelp" class="form-text text-muted">*Check for capslock</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="lpassword" placeholder="Password">
+                  </div>
+                  <button type="submit" class="btn btn-dark">Submit</button>
+                </form>        -->
+            </div>
+            <div class="col-md-6" style="padding: 30px 40px 30px 40px">
+                <h1 style="text-align: center;padding-bottom: 30px">Register</h1>
+                <form method="post" action="/api/auth/new" style="font-size: 20px">
+                  <div class="form-group">
+                      <label for="rname">Name</label>
+                      <input id="rname" type="text" class="form-control" name="name" placeholder="Enter name">
+                    
+                  </div>
+                  <div class="form-group">
+                    <label for="username">Username</label>
+                      <input id="lusername" type="text" class="form-control" name="username" placeholder="Enter username">
+                  </div>
+                  <div class="form-group">
+                      <label for="email">Email ID</label>
+                      <input id="rmail" type="email" class="form-control" name="email" placeholder="ex:  abc..@xyz.com">
+                      <small id="emailHelp" class="form-text text-muted">*we wont share your email with anyone</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="Phone">Phone No.</label>
+                      <input id="rphone" type="tel" class="form-control" name="phone" placeholder="Enter phone no">
+                      
+                  </div>
+                  <div class="form-group">
+                    <label for="doctor_reg_id">Doc Reg ID</label>
+                      <input id="rid" type="text" class="form-control" name="doctor_reg_id" placeholder="doctor_reg_id">
+                      
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                      <input id="lpassword" type="password" class="form-control" name="password">
+                  </div>
+                  <button type="submit" class="btn btn-dark">Register</button>
+                </form>       
+            </div>
+        </div>
+    </div>
+   
+   
+
+    <
+</main>
+{% endblock %}
